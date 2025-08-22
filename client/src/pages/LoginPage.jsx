@@ -1,5 +1,6 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import assets from '../assets/assets';
+import { AuthContext } from '../../context/AuthContext'
 const LoginPage = () => {
 
   const [currState, setCurrState] = useState("Sign up")
@@ -11,8 +12,11 @@ const LoginPage = () => {
   const [step, setStep] = useState(1)
   const [isDataSubmitted, setIsDataSubmitted] = useState(false);
 
+  const {login} = useContext(AuthContext)
+
   const onSubmitHandler = (event) => {
     event.preventDefault();
+
     if (currState === "Sign up" && !isDataSubmitted) {
       if (password !== confirmPassword) {
         alert("Passwords do not match!");
@@ -21,6 +25,8 @@ const LoginPage = () => {
       setIsDataSubmitted(true);
       return;
     }
+    login(currState=== "Sign up" ? 'signup' : 'login', {fullName, email, password,
+    bio})
   }
   return (
   <div className='min-h-screen flex items-center justify-center bg-cover bg-center gap-8
