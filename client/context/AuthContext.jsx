@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
   // Login function to handle user authentication and socket connection
   const login = async (state, credentials) => {
     try {
-      const { data } = await axios.post(`/api/auth/${state}`, credentials); // <-- backticks
+      const { data } = await axios.post(`/api/auth/${state}`, credentials); 
       if (data.success) {
         // be consistent with your API: often this is data.user
             setAuthUser(data.userData);
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
     setToken(null);
     setAuthUser(null);
     setOnlineUsers([]);
-    delete axios.defaults.headers.common["token"];
+    axios.defaults.headers.common["token"] = null;
     toast.success("Logged out successfully");
     socket.disconnect();
   };
@@ -83,11 +83,6 @@ export const AuthProvider = ({ children }) => {
     });
     newSocket.connect();
     setSocket(newSocket);
-
-    newSocket.on("connect_error", (err) => {
-      console.error("Socket connect_error:", err?.message || err);
-    });
-
     newSocket.on("getOnlineUsers", (userIds) => {
       setOnlineUsers(userIds);
     });

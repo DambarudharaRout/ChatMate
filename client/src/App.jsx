@@ -4,7 +4,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/ProfilePage";
 import { Toaster } from "react-hot-toast";
-import { AuthContext } from "../context/AuthContext.jsx";
+import { AuthContext } from "../context/AuthContext.jsx"
 import bgImage from "./assets/bgImage.svg"; // or move to public and use a Tailwind url()
 
 const App = () => {
@@ -31,7 +31,7 @@ const App = () => {
         />
       </Routes>
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App

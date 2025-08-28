@@ -1,15 +1,15 @@
 import React, {useState, useContext} from 'react'
 import assets from '../assets/assets';
 import { AuthContext } from '../../context/AuthContext'
+
+
 const LoginPage = () => {
 
   const [currState, setCurrState] = useState("Sign up")
   const [fullName, setFullName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
   const [bio, setBio] = useState("")
-  const [step, setStep] = useState(1)
   const [isDataSubmitted, setIsDataSubmitted] = useState(false);
 
   const {login} = useContext(AuthContext)
@@ -18,10 +18,7 @@ const LoginPage = () => {
     event.preventDefault();
 
     if (currState === "Sign up" && !isDataSubmitted) {
-      if (password !== confirmPassword) {
-        alert("Passwords do not match!");
-        return;
-      }
+      
       setIsDataSubmitted(true);
       return;
     }
@@ -32,10 +29,8 @@ const LoginPage = () => {
   <div className='min-h-screen flex items-center justify-center bg-cover bg-center gap-8
     sm:justify-evenly max-sm:flex-col backdrop-blur-2xl'>
 
-    {/*-----------Left-------------*/}
     <img src={assets.logo_big} alt="" className='w-[min(30vw,250px)]' />
 
-    {/*-----------Right-------------*/}
     <form onSubmit={onSubmitHandler} className='boredr-2 bg-white/8 text-white border-gray-500 p-6 flex
       flex-col gap-6 rounded-lg shadow-lg'>
       <h2 className='font-medium text-2xl flex justify-between items-center'>
@@ -82,16 +77,6 @@ const LoginPage = () => {
           />
           </>
       )}
-          {!isDataSubmitted && currState === "Sign up" && (
-            <input
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              value={confirmPassword}
-              type="password"
-              placeholder="Confirm Password"
-              required
-              className="p-2 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          )}
 
           {currState === "Sign up" && isDataSubmitted && (
             <textarea
@@ -104,12 +89,12 @@ const LoginPage = () => {
             ></textarea>
           )}
 
-      <button
+        <button
         type='submit'
-        className='py-3 bg-gradient-to-r from-purple-400 to-violet-600 text-white rounded-md hover:from-purple-500 hover:to-violet-700 cursor-pointer'
-      >
-        Create Account
-      </button>
+        className='py-3 bg-gradient-to-r from-purple-400 to-violet-600 text-white rounded-md hover:from-purple-500 hover:to-violet-700 cursor-pointer'>
+        {currState === "Sign up" ? "Create Account" : "Login now"}
+        </button>
+
 
       <div className='flex items-center gap-2 text-sm text-gray-500'>
         <input type="checkbox" />

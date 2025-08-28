@@ -34,7 +34,9 @@ export const login = async (req,res) =>{
     try{
         const { fullName, email, password, bio } = req.body;
         const userData = await User.findOne({email})
-
+        if (!userData) {
+        return res.json({ success: false, message: "User not found" });
+        }
         const isPasswordCorrect = await bcrypt.compare(password, userData.password);
 
         if(!isPasswordCorrect){
@@ -52,7 +54,7 @@ export const login = async (req,res) =>{
 }
 
 //controller to check if user is authenticated
-export const checkAuth = ()=>{
+export const checkAuth = (req, res)=>{
     res.json({success: true, user: req.user});
 }
 
@@ -68,8 +70,7 @@ export const updateProfile = async (req, res)=>{
             {new: true});
         } else{
             const upload = await cloudinary .uploader.upload(profilePic);
-            updatedUser = await User.findByIdAndUpdate(userId, {profilePic: upload.
-            secure_url, bio, fullName}, {new:true});
+            updatedUser = await User.findByIdAndUpdate(userId, {profilePic: upload.secure_url, bio, fullName}, {new:true});
         }
         res.json({success:true, user: updatedUser})
     }catch(error){
